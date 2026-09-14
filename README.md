@@ -47,19 +47,17 @@ pequeños en **tiempo de ejecución** mediante Module Federation.
         ┌───────────────┬───────┼────────┬───────────────┐
         ▼               ▼       ▼        ▼               ▼
    afiliados        aportes  historial pensiones      empresas
-   (4101)           (4102)   laboral   (4104)          (4105)
-                            (4103)
+                            laboral
         │               │       │        │               │
         ├───────────────┴───────┼────────┴───────────────┘
         │                       ▼
-        │                   admin (4106)
+        │                       admin
         ▼
    Module Federation · CLIENT-ONLY
         │
    ┌────┴─────┬─────────┐
    ▼          ▼         ▼
 design-system shell-nav auth-widget
-   (4111)      (4112)    (4113)
 ```
 
 Cada zona se sirve bajo un `basePath` (`/afiliados`, `/aportes`, `/historial-laboral`, `/pensiones`, `/empresas`,
@@ -72,15 +70,15 @@ cargan en tiempo de ejecución desde los remotos federados.
 
 ## 🗂️ Microfrontends por dominio
 
-| 🧩 Zona | 🏷️ Dominio | 🌐 Base path | Puerto dev |
-|---|---|---|---|
-| `shell-nutria` | Transversal | `/` | 4100 |
-| `mfe-afiliados` | Afiliados | `/afiliados` | 4101 |
-| `mfe-aportes` | Aportes | `/aportes` | 4102 |
-| `mfe-historial-laboral` | Historial laboral | `/historial-laboral` | 4103 |
-| `mfe-pensiones` | Pensiones | `/pensiones` | 4104 |
-| `mfe-empresas` | Empresas | `/empresas` | 4105 |
-| `mfe-admin` | Administración | `/admin` | 4106 |
+| 🧩 Zona | 🏷️ Dominio | 🌐 Base path |
+|---|---|---|
+| `shell-nutria` | Transversal | `/` |
+| `mfe-afiliados` | Afiliados | `/afiliados` |
+| `mfe-aportes` | Aportes | `/aportes` |
+| `mfe-historial-laboral` | Historial laboral | `/historial-laboral` |
+| `mfe-pensiones` | Pensiones | `/pensiones` |
+| `mfe-empresas` | Empresas | `/empresas` |
+| `mfe-admin` | Administración | `/admin` |
 
 ---
 
@@ -93,13 +91,40 @@ cargan en tiempo de ejecución desde los remotos federados.
 > ⚠️ Este monorepo usa **pnpm** como gestor de paquetes (workspaces vía `pnpm-workspace.yaml`).
 > No uses `npm install` / `npm run`; el lockfile que se versiona es `pnpm-lock.yaml`.
 
+### Variables de entorno
+
+Las URLs de los remotos de Module Federation (`design_system`, `shell_nav`, `auth_widget`) **no están hardcodeadas**
+en el código: se leen de variables `NEXT_PUBLIC_*` (`NEXT_PUBLIC_DS_URL`, `NEXT_PUBLIC_SHELL_NAV_URL`,
+`NEXT_PUBLIC_AUTH_WIDGET_URL`).
+
+Para preparar tu entorno local:
+
+1. Copia la plantilla `.env.example` a `.env.local` en **cada app** y mantén los valores por defecto:
+   ```bash
+   cp apps/shell-nutria/.env.example apps/shell-nutria/.env.local
+   cp apps/mfe-afiliados/.env.example apps/mfe-afiliados/.env.local
+   cp apps/mfe-aportes/.env.example  apps/mfe-aportes/.env.local
+   cp apps/mfe-historial-laboral/.env.example apps/mfe-historial-laboral/.env.local
+   cp apps/mfe-pensiones/.env.example apps/mfe-pensiones/.env.local
+   cp apps/mfe-empresas/.env.example apps/mfe-empresas/.env.local
+   cp apps/mfe-admin/.env.example apps/mfe-admin/.env.local
+   ```
+2. Para otros ambientes (QA/prod), define las variables en el entorno de despliegue de cada app.
+3. **No subas `.env.local` a Git**: está ignorado vía `.gitignore` (`.env.local`, `.env*.local`).
+   `.env.example` sí se versiona como plantilla (sin secretos; valores solo de desarrollo local).
+4. Si falta alguna variable, las apps lanzan un error claro en el cliente al inicializar Module Federation:
+   el remoto correspondiente no se carga hasta definirla.
+
+> Las `NEXT_PUBLIC_*` son **necesariamente públicas** para el navegador (CLIENT-ONLY): no son secretos, solo
+> centralizan la configuración por ambiente fuera del código fuente.
+
 ```bash
 pnpm install
 pnpm dev              # 7 apps Next.js + 3 remotos Module Federation
 ```
 
-Abre **http://localhost:4100** (shell). La barra lateral navega a cada dominio y los componentes compartidos se cargan
-desde los remotos (4111–4113).
+Abre la URL local del shell (el puerto lo asigna la configuración del entorno). La barra lateral navega a cada dominio
+y los componentes compartidos se cargan desde los remotos federados.
 
 ```bash
 pnpm dev:apps         # solo apps (Next.js)
