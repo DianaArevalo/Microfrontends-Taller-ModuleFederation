@@ -6,12 +6,12 @@ import type { NextConfig } from 'next';
  * En producción, apunta cada variable de entorno al dominio desplegado de la zona.
  */
 const ZONES: Record<string, string> = {
-  afiliados: process.env.ZONE_AFILIADOS ?? 'http://localhost:3001',
-  aportes: process.env.ZONE_APORTES ?? 'http://localhost:3002',
-  'historial-laboral': process.env.ZONE_HISTORIAL_LABORAL ?? 'http://localhost:3003',
-  pensiones: process.env.ZONE_PENSIONES ?? 'http://localhost:3004',
-  empresas: process.env.ZONE_EMPRESAS ?? 'http://localhost:3005',
-  admin: process.env.ZONE_ADMIN ?? 'http://localhost:3006',
+  afiliados: process.env.ZONE_AFILIADOS ?? 'http://localhost:4101',
+  aportes: process.env.ZONE_APORTES ?? 'http://localhost:4102',
+  'historial-laboral': process.env.ZONE_HISTORIAL_LABORAL ?? 'http://localhost:4103',
+  pensiones: process.env.ZONE_PENSIONES ?? 'http://localhost:4104',
+  empresas: process.env.ZONE_EMPRESAS ?? 'http://localhost:4105',
+  admin: process.env.ZONE_ADMIN ?? 'http://localhost:4106',
 };
 
 const nextConfig: NextConfig = {

@@ -15,7 +15,7 @@ export default defineConfig({
     }),
   ],
   server: {
-    port: 3011,
+    port: 4111,
   },
   html: {
     title: 'NUTRIA · design-system',

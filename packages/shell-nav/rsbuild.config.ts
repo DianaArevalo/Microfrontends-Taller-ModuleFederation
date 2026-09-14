@@ -15,7 +15,7 @@ export default defineConfig({
     }),
   ],
   server: {
-    port: 3012,
+    port: 4112,
   },
   html: {
     title: 'NUTRIA · shell-nav',
