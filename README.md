@@ -79,3 +79,55 @@ NUTRIA utiliza una arquitectura híbrida:
                  │                                │
                  │        CLIENT-ONLY             │
                  └────────────────────────────────┘
+```
+
+# 🗂️ Microfrontends por dominio
+
+Cada bounded context se representa mediante una zona independiente.
+
+| 🧩 Zona | 🏷️ Dominio | 🌐 Path |
+|---|---|---|
+| `shell-nutria` | Transversal | `/` |
+| `mfe-afiliados` | Afiliados | `/afiliados` |
+| `mfe-aportes` | Aportes | `/aportes` |
+| `mfe-historial-laboral` | Historial laboral | `/historial-laboral` |
+| `mfe-pensiones` | Pensiones | `/pensiones` |
+| `mfe-empresas` | Empresas | `/empresas` |
+| `mfe-admin` | Administración | `/admin` |
+
+---
+
+# 📁 Estructura del repositorio
+
+```text
+nutria/
+│
+├── 📦 apps/
+│   │
+│   ├── 🏠 shell-nutria/
+│   │
+│   ├── 👤 mfe-afiliados/
+│   │
+│   ├── 💰 mfe-aportes/
+│   │
+│   ├── 📋 mfe-historial-laboral/
+│   │
+│   ├── 🏦 mfe-pensiones/
+│   │
+│   ├── 🏢 mfe-empresas/
+│   │
+│   └── ⚙️ mfe-admin/
+│
+├── 🔗 packages/
+│   │
+│   ├── 🎨 design-system/
+│   │
+│   ├── 🧭 shell-nav/
+│   │
+│   └── 🔐 auth-widget/
+│
+├── 📚 docs/
+│
+├── 📄 package.json
+├── 📄 tsconfig.json
+└── 📄 README.md
