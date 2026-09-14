@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  --ink: #1b2430;
+  --ink-soft: #5b6470;
+  --paper: #f3f4ec;
+  --paper-raised: #ffffff;
+  --line: #dddfcf;
+  --accent: #0f5c52;
+  --accent-soft: #e4eeea;
+  --amber: #b4791f;
+  --amber-soft: #fbf0de;
+  --success: #2f7a4f;
+  --success-soft: #e7f3ec;
+  --danger: #b23a34;
+  --danger-soft: #fbeae9;
+  --stripe: #eef2e8;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+
+/* ---------- Estructura base ---------- */
+.nt-shell { display: grid; grid-template-columns: 232px 1fr; min-height: 100vh; }
+.nt-main { display: flex; flex-direction: column; min-width: 0; }
+.nt-content { padding: 32px; max-width: 960px; width: 100%; }
+.nt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-top: 18px; }
+
+/* ---------- Página / encabezados ---------- */
+.nt-page-head { margin-bottom: 18px; }
+.nt-page-title { font-family: var(--font-display); font-size: 28px; font-weight: 500; margin: 0 0 6px 0; }
+.nt-page-desc { margin: 0 0 14px 0; color: var(--ink-soft); max-width: 70ch; }
+.nt-chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.nt-section { margin-top: 28px; }
+
+/* ---------- Enlaces tipo card ---------- */
+.nt-link-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-decoration: none;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 20px 22px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.nt-link-card:hover { border-color: var(--ink-soft); box-shadow: 0 4px 14px rgba(27, 36, 48, 0.08); }
+.nt-link-card-title { font-family: var(--font-display); font-size: 18px; font-weight: 500; }
+.nt-link-card-desc { font-size: 13.5px; color: var(--ink-soft); }
+
+/* ---------- Tabla ---------- */
+.nt-table { width: 100%; border-collapse: collapse; background: var(--paper-raised); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.nt-table thead th {
+  text-align: left;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--line);
+}
+.nt-table tbody td { padding: 12px 16px; font-size: 13.5px; border-bottom: 1px solid var(--line); }
+.nt-table tbody tr:last-child td { border-bottom: none; }
+.nt-table tbody tr:nth-child(even) { background: var(--stripe); }
+td.nt-mono { font-family: var(--font-mono); color: var(--ink); }
+
+/* ---------- Formularios placeholder ---------- */
+.nt-form { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+.nt-field { display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--ink-soft); }
+.nt-field input,
+.nt-field select {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 9px 12px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  background: var(--paper-raised);
+  color: var(--ink);
+}
+
+/* ---------- CTA ---------- */
+.nt-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 13.5px;
+  font-weight: 500;
+  text-decoration: none;
+  background: var(--accent);
+  color: #fff;
+  transition: background 0.15s ease;
+}
+.nt-cta:hover { background: #0c4b43; }
+.nt-cta-row { display: flex; align-items: center; gap: 12px; margin-top: 18px; }
+
+/* ---------- Login ---------- */
+.nt-login-wrap { display: flex; flex-direction: column; gap: 16px; max-width: 420px; margin: 24px auto 0; }
+
+/* ---------- Skeleton ---------- */
+.nt-skeleton { background: var(--stripe); border-radius: 6px; color: var(--ink-soft); }
+.nt-sidebar-fallback {
+  background: var(--ink);
+  color: #dde2de;
+  padding: 28px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 100vh;
+}
+.nt-sidebar-fallback .brand { font-family: var(--font-display); font-size: 22px; color: #fff; margin: 0 0 4px 4px; }
+.nt-sidebar-fallback .brand-sub { font-size: 11.5px; color: #8c9691; margin: 0 0 22px 4px; }
+.nt-sidebar-fallback .entry { padding: 9px 12px; border-radius: 6px; color: #c3cbc6; font-size: 14px; }
+
+@media (max-width: 820px) {
+  .nt-shell { grid-template-columns: 1fr; }
+  .nt-sidebar-fallback { display: none; }
+  .nt-content { padding: 20px; }
+}

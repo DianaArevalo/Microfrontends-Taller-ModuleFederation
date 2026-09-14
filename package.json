@@ -1,0 +1,35 @@
+{
+  "name": "nutria",
+  "version": "0.1.0",
+  "private": true,
+  "description": "NUTRIA — Laboratorio frontend de microfrontends orientados al dominio (Next.js 15 + Multi-Zones + Module Federation)",
+  "license": "MIT",
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": ">=18.18.0",
+    "pnpm": ">=9.0.0"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n shell,afiliados,aportes,historial,pensiones,empresas,admin,design-system,shell-nav,auth-widget -c blue,green,cyan,magenta,yellow,red,white,gray,blue,cyan.dim \"pnpm dev:shell\" \"pnpm dev:afiliados\" \"pnpm dev:aportes\" \"pnpm dev:historial\" \"pnpm dev:pensiones\" \"pnpm dev:empresas\" \"pnpm dev:admin\" \"pnpm dev:design-system\" \"pnpm dev:shell-nav\" \"pnpm dev:auth-widget\"",
+    "dev:apps": "concurrently -k -n shell,afiliados,aportes,historial,pensiones,empresas,admin -c blue,green,cyan,magenta,yellow,red,white \"pnpm dev:shell\" \"pnpm dev:afiliados\" \"pnpm dev:aportes\" \"pnpm dev:historial\" \"pnpm dev:pensiones\" \"pnpm dev:empresas\" \"pnpm dev:admin\"",
+    "dev:remotes": "concurrently -k -n design-system,shell-nav,auth-widget -c gray,blue,cyan.dim \"pnpm dev:design-system\" \"pnpm dev:shell-nav\" \"pnpm dev:auth-widget\"",
+    "dev:shell": "pnpm --filter shell-nutria dev",
+    "dev:afiliados": "pnpm --filter mfe-afiliados dev",
+    "dev:aportes": "pnpm --filter mfe-aportes dev",
+    "dev:historial": "pnpm --filter mfe-historial-laboral dev",
+    "dev:pensiones": "pnpm --filter mfe-pensiones dev",
+    "dev:empresas": "pnpm --filter mfe-empresas dev",
+    "dev:admin": "pnpm --filter mfe-admin dev",
+    "dev:design-system": "pnpm --filter @nutria/design-system dev",
+    "dev:shell-nav": "pnpm --filter @nutria/shell-nav dev",
+    "dev:auth-widget": "pnpm --filter @nutria/auth-widget dev",
+    "build": "pnpm -r --if-present build",
+    "build:apps": "pnpm -r --if-present --filter=shell-nutria --filter=mfe-afiliados --filter=mfe-aportes --filter=mfe-historial-laboral --filter=mfe-pensiones --filter=mfe-empresas --filter=mfe-admin build",
+    "build:remotes": "pnpm -r --if-present --filter=@nutria/design-system --filter=@nutria/shell-nav --filter=@nutria/auth-widget build",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "preview": "pnpm -r --if-present preview"
+  },
+  "devDependencies": {
+    "concurrently": "9.2.4"
+  }
+}

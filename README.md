@@ -17,117 +17,126 @@
 
 ## 📖 Descripción
 
-**NUTRIA** es un laboratorio de desarrollo frontend orientado a la construcción de una aplicación de gestión de pensiones utilizando una arquitectura de **Microfrontends orientados al dominio**.
+**NUTRIA** es un laboratorio de desarrollo frontend orientado a la construcción de una aplicación de gestión de
+pensiones utilizando una arquitectura de **Microfrontends orientados al dominio**.
 
-La solución divide el frontend en diferentes **zonas independientes**, donde cada zona representa una responsabilidad funcional específica del sistema.
+La solución divide el frontend en **zonas independientes** (cada una es una app Next.js propia) y comparte componentes
+pequeños en **tiempo de ejecución** mediante Module Federation.
 
-La arquitectura utiliza un enfoque híbrido basado principalmente en:
+- ⚛️ Next.js 15 · 🟦 TypeScript · 🧭 App Router
+- 🧩 Multi-Zones → separación principal de los dominios
+- 🔗 Module Federation → componentes compartidos en runtime (CLIENT-ONLY)
+- ▫️ Sin Pages Router · ▫️ Backend NO disponible (datos simulados)
 
-- ⚛️ **Next.js 15**
-- 🟦 **TypeScript**
-- 🧭 **App Router**
-- 🧩 **Multi-Zones**
-- 🔗 **Module Federation**
-- 🖥️ **Server Components**
-- 🌐 **Client Components**
-- 🔐 **RBAC — Role-Based Access Control**
-- 🔌 **API REST** como capa de integración con el backend
-
-> 🎯 **Objetivo:** construir un frontend modular, desacoplado y organizado por dominios, donde cada zona pueda evolucionar y desplegarse de manera independiente.
+> Este repositorio contiene el **esqueleto arquitectónico inicial**: aplicaciones, rutas, estructura de carpetas y
+> configuración base. Las funcionalidades de cada dominio se construirán posteriormente.
 
 ---
 
-# 🏗️ Arquitectura
-
-NUTRIA utiliza una arquitectura híbrida:
+## 🏗️ Arquitectura
 
 ```text
-                              🏛️ NUTRIA
-                                  │
-                                  ▼
-                        ┌───────────────────┐
-                        │   shell-nutria    │
-                        │      🏠 HOST      │
-                        │                   │
-                        │ Layout            │
-                        │ Auth              │
-                        │ Dashboard         │
-                        │ Gateway / Routing │
-                        └─────────┬─────────┘
-                                  │
-                              Multi-Zones
-                                  │
-          ┌───────────────┬───────┼────────┬───────────────┐
-          │               │       │        │               │
-          ▼               ▼       ▼        ▼               ▼
-     👤 Afiliados     💰 Aportes  📋 Hist.  🏦 Pensiones   🏢 Empresas
-        MFE              MFE       Laboral      MFE           MFE
-          │               │       │        │               │
-          └───────────────┴───────┼────────┴───────────────┘
-                                  │
-                                  ▼
-                              ⚙️ Admin
-                                MFE
-
-
-                 ┌────────────────────────────────┐
-                 │     🔗 Module Federation       │
-                 │                                │
-                 │  🎨 design-system              │
-                 │  🧭 shell-nav                  │
-                 │  🔐 auth-widget                │
-                 │                                │
-                 │        CLIENT-ONLY             │
-                 └────────────────────────────────┘
+                                NUTRIA
+                                   │
+                                   ▼
+                         ┌───────────────────┐
+                         │   shell-nutria    │   HOST · gateway /<dominio> → zona
+                         │      / dashboard  │
+                         └─────────┬─────────┘
+                                   │ Multi-Zones (rewrites)
+        ┌───────────────┬───────┼────────┬───────────────┐
+        ▼               ▼       ▼        ▼               ▼
+   afiliados        aportes  historial pensiones      empresas
+   (3001)           (3002)   laboral   (3004)          (3005)
+                            (3003)
+        │               │       │        │               │
+        ├───────────────┴───────┼────────┴───────────────┘
+        │                       ▼
+        │                   admin (3006)
+        ▼
+   Module Federation · CLIENT-ONLY
+        │
+   ┌────┴─────┬─────────┐
+   ▼          ▼         ▼
+design-system shell-nav auth-widget
+   (3011)      (3012)    (3013)
 ```
 
-# 🗂️ Microfrontends por dominio
+Cada zona se sirve bajo un `basePath` (`/afiliados`, `/aportes`, `/historial-laboral`, `/pensiones`, `/empresas`,
+`/admin`) y el shell enruta hacia ellas. Componentes como la barra de navegación, el topbar, los badges y botones se
+cargan en tiempo de ejecución desde los remotos federados.
 
-Cada bounded context se representa mediante una zona independiente.
-
-| 🧩 Zona | 🏷️ Dominio | 🌐 Path |
-|---|---|---|
-| `shell-nutria` | Transversal | `/` |
-| `mfe-afiliados` | Afiliados | `/afiliados` |
-| `mfe-aportes` | Aportes | `/aportes` |
-| `mfe-historial-laboral` | Historial laboral | `/historial-laboral` |
-| `mfe-pensiones` | Pensiones | `/pensiones` |
-| `mfe-empresas` | Empresas | `/empresas` |
-| `mfe-admin` | Administración | `/admin` |
+> Detalle completo: [docs/arquitectura.md](docs/arquitectura.md)
 
 ---
 
-# 📁 Estructura del repositorio
+## 🗂️ Microfrontends por dominio
+
+| 🧩 Zona | 🏷️ Dominio | 🌐 Base path | Puerto dev |
+|---|---|---|---|
+| `shell-nutria` | Transversal | `/` | 3000 |
+| `mfe-afiliados` | Afiliados | `/afiliados` | 3001 |
+| `mfe-aportes` | Aportes | `/aportes` | 3002 |
+| `mfe-historial-laboral` | Historial laboral | `/historial-laboral` | 3003 |
+| `mfe-pensiones` | Pensiones | `/pensiones` | 3004 |
+| `mfe-empresas` | Empresas | `/empresas` | 3005 |
+| `mfe-admin` | Administración | `/admin` | 3006 |
+
+---
+
+## 🚀 Inicio rápido
+
+**Requisitos:**
+- Node.js ≥ 18.18 (recomendado 20/22)
+- [pnpm](https://pnpm.io/) ≥ 9 (el proyecto fija `pnpm@10.28.0` vía `packageManager`)
+
+> ⚠️ Este monorepo usa **pnpm** como gestor de paquetes (workspaces vía `pnpm-workspace.yaml`).
+> No uses `npm install` / `npm run`; el lockfile que se versiona es `pnpm-lock.yaml`.
+
+```bash
+pnpm install
+pnpm dev              # 7 apps Next.js + 3 remotos Module Federation
+```
+
+Abre **http://localhost:3000** (shell). La barra lateral navega a cada dominio y los componentes compartidos se cargan
+desde los remotos (3011–3013).
+
+```bash
+pnpm dev:apps         # solo apps (Next.js)
+pnpm dev:remotes      # solo remotos (Rsbuild)
+pnpm build            # build de todo el monorepo
+pnpm typecheck        # typecheck de todos los workspaces
+```
+
+---
+
+## 📁 Estructura del repositorio
 
 ```text
-nutria/
-│
 ├── 📦 apps/
-│   │
 │   ├── 🏠 shell-nutria/
-│   │
 │   ├── 👤 mfe-afiliados/
-│   │
 │   ├── 💰 mfe-aportes/
-│   │
 │   ├── 📋 mfe-historial-laboral/
-│   │
 │   ├── 🏦 mfe-pensiones/
-│   │
 │   ├── 🏢 mfe-empresas/
-│   │
 │   └── ⚙️ mfe-admin/
-│
-├── 🔗 packages/
-│   │
+├── 🔗 packages/          # Remotos Module Federation (Rsbuild)
 │   ├── 🎨 design-system/
-│   │
 │   ├── 🧭 shell-nav/
-│   │
 │   └── 🔐 auth-widget/
-│
 ├── 📚 docs/
-│
-├── 📄 package.json
-├── 📄 tsconfig.json
-└── 📄 README.md
+├── 📄 package.json       # pnpm workspace raíz + scripts orquestados
+├── 📄 pnpm-workspace.yaml
+└── 📄 tsconfig.base.json
+```
+
+---
+
+## 🛣️ Roadmap
+
+1. **Esqueleto arquitectónico** (estado actual) — apps, rutas, mocks y configuración.
+2. **Dominios** — desarrollar funcionalidad de cada MFE sobre el esqueleto.
+3. **Backend** — integrar API REST (Oracle/Java/.NET) cuando esté disponible.
+4. **Auth & RBAC** — autenticación real (JWT/SSO) y control de acceso por rol.
+5. **Calidad** — tests, CI/CD y despliegue independiente por zona.
