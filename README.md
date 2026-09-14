@@ -47,19 +47,19 @@ pequeños en **tiempo de ejecución** mediante Module Federation.
         ┌───────────────┬───────┼────────┬───────────────┐
         ▼               ▼       ▼        ▼               ▼
    afiliados        aportes  historial pensiones      empresas
-   (4101)           (4102)   laboral   (4104)          (4105)
-                            (4103)
+   (3001)           (3002)   laboral   (3004)          (3005)
+                            (3003)
         │               │       │        │               │
         ├───────────────┴───────┼────────┴───────────────┘
         │                       ▼
-        │                   admin (4106)
+        │                   admin (3006)
         ▼
    Module Federation · CLIENT-ONLY
         │
    ┌────┴─────┬─────────┐
    ▼          ▼         ▼
 design-system shell-nav auth-widget
-   (4111)      (4112)    (4113)
+   (3011)      (3012)    (3013)
 ```
 
 Cada zona se sirve bajo un `basePath` (`/afiliados`, `/aportes`, `/historial-laboral`, `/pensiones`, `/empresas`,
@@ -74,13 +74,13 @@ cargan en tiempo de ejecución desde los remotos federados.
 
 | 🧩 Zona | 🏷️ Dominio | 🌐 Base path | Puerto dev |
 |---|---|---|---|
-| `shell-nutria` | Transversal | `/` | 4100 |
-| `mfe-afiliados` | Afiliados | `/afiliados` | 4101 |
-| `mfe-aportes` | Aportes | `/aportes` | 4102 |
-| `mfe-historial-laboral` | Historial laboral | `/historial-laboral` | 4103 |
-| `mfe-pensiones` | Pensiones | `/pensiones` | 4104 |
-| `mfe-empresas` | Empresas | `/empresas` | 4105 |
-| `mfe-admin` | Administración | `/admin` | 4106 |
+| `shell-nutria` | Transversal | `/` | 3000 |
+| `mfe-afiliados` | Afiliados | `/afiliados` | 3001 |
+| `mfe-aportes` | Aportes | `/aportes` | 3002 |
+| `mfe-historial-laboral` | Historial laboral | `/historial-laboral` | 3003 |
+| `mfe-pensiones` | Pensiones | `/pensiones` | 3004 |
+| `mfe-empresas` | Empresas | `/empresas` | 3005 |
+| `mfe-admin` | Administración | `/admin` | 3006 |
 
 ---
 
@@ -98,8 +98,8 @@ pnpm install
 pnpm dev              # 7 apps Next.js + 3 remotos Module Federation
 ```
 
-Abre **http://localhost:4100** (shell). La barra lateral navega a cada dominio y los componentes compartidos se cargan
-desde los remotos (4111–4113).
+Abre **http://localhost:3000** (shell). La barra lateral navega a cada dominio y los componentes compartidos se cargan
+desde los remotos (3011–3013).
 
 ```bash
 pnpm dev:apps         # solo apps (Next.js)
