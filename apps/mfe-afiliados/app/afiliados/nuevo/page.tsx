@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Card, Button } from '@/components/ds';
+import { Card, Button } from '@/lib/ds';
 
 export default function NuevoAfiliadoPage(): ReactNode {
   return (

@@ -65,6 +65,7 @@ web_modules/
 # dotenv environment variable files
 .env
 .env.*
+.env*.local
 !.env.example
 
 # parcel-bundler cache (https://parceljs.org/)
@@ -150,3 +151,7 @@ apps/**/out/
 packages/**/dist/
 .rsbuild-cache
 *.tsbuildinfo
+
+.env
+.env.*
+!.env.example

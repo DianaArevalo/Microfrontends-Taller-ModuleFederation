@@ -5,11 +5,23 @@ import { useEffect, useState, type ComponentType } from 'react';
 
 export type RemoteStatus = 'loading' | 'ready' | 'error';
 
-const REMOTE_URLS: Record<string, string> = {
-  design_system: process.env.NEXT_PUBLIC_DS_URL ?? 'http://localhost:3011',
-  shell_nav: process.env.NEXT_PUBLIC_SHELL_NAV_URL ?? 'http://localhost:3012',
-  auth_widget: process.env.NEXT_PUBLIC_AUTH_WIDGET_URL ?? 'http://localhost:3013',
-};
+function requireRemoteUrl(remoteName: string, envName: string, value: string | undefined): string {
+  if (!value) {
+    throw new Error(
+      `[NUTRIA federation] Falta la variable "${envName}" para el remoto "${remoteName}". ` +
+        'Copia .env.example a .env.local y define el valor antes de iniciar.',
+    );
+  }
+  return value;
+}
+
+function getRemoteUrls(): Record<string, string> {
+  return {
+    design_system: requireRemoteUrl('design_system', 'NEXT_PUBLIC_DS_URL', process.env.NEXT_PUBLIC_DS_URL),
+    shell_nav: requireRemoteUrl('shell_nav', 'NEXT_PUBLIC_SHELL_NAV_URL', process.env.NEXT_PUBLIC_SHELL_NAV_URL),
+    auth_widget: requireRemoteUrl('auth_widget', 'NEXT_PUBLIC_AUTH_WIDGET_URL', process.env.NEXT_PUBLIC_AUTH_WIDGET_URL),
+  };
+}
 
 let ensured = false;
 
@@ -18,7 +30,7 @@ function ensureSharedRemotes(): void {
   ensured = true;
   init({
     name: 'nutria-app',
-    remotes: Object.entries(REMOTE_URLS).map(([name, entry]) => ({
+    remotes: Object.entries(getRemoteUrls()).map(([name, entry]) => ({
       name,
       entry: `${entry}/remoteEntry.js`,
     })),

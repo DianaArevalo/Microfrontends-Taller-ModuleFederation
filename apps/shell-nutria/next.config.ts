@@ -1,18 +1,33 @@
 import type { NextConfig } from 'next';
 
 /**
- * Multi-Zones: el shell actúa como gateway de rutas.
- * Cada zona Next.js vive en un puerto propio y responde con basePath '/<zona>'.
- * En producción, apunta cada variable de entorno al dominio desplegado de la zona.
+ * Gateway Multi-Zones: reenvía /<zona> y /<zona>/* hacia la app de cada zona.
+ * Ninguna URL de infraestructura queda hardcodeada: cada target se define vía
+ * variable de entorno (ZONE_*_URL) en .env.local o el entorno de despliegue.
  */
-const ZONES: Record<string, string> = {
-  afiliados: process.env.ZONE_AFILIADOS ?? 'http://localhost:3001',
-  aportes: process.env.ZONE_APORTES ?? 'http://localhost:3002',
-  'historial-laboral': process.env.ZONE_HISTORIAL_LABORAL ?? 'http://localhost:3003',
-  pensiones: process.env.ZONE_PENSIONES ?? 'http://localhost:3004',
-  empresas: process.env.ZONE_EMPRESAS ?? 'http://localhost:3005',
-  admin: process.env.ZONE_ADMIN ?? 'http://localhost:3006',
-};
+const ZONE_KEYS: ReadonlyArray<readonly [zone: string, envName: string]> = [
+  ['afiliados', 'ZONE_AFILIADOS_URL'],
+  ['aportes', 'ZONE_APORTES_URL'],
+  ['historial-laboral', 'ZONE_HISTORIAL_LABORAL_URL'],
+  ['pensiones', 'ZONE_PENSIONES_URL'],
+  ['empresas', 'ZONE_EMPRESAS_URL'],
+  ['admin', 'ZONE_ADMIN_URL'],
+];
+
+function requireZoneUrl(zone: string, envName: string): string {
+  const value = process.env[envName];
+  if (!value) {
+    throw new Error(
+      `[NUTRIA gateway] Falta la variable "${envName}" para la zona "${zone}". ` +
+        'Copia .env.example a .env.local y define el target antes de iniciar.',
+    );
+  }
+  return value;
+}
+
+const ZONES: Record<string, string> = Object.fromEntries(
+  ZONE_KEYS.map(([zone, envName]) => [zone, requireZoneUrl(zone, envName)]),
+);
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,

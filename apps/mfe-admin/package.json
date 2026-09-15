@@ -4,9 +4,9 @@
   "private": true,
   "description": "NUTRIA — MFE Administración (zona Multi-Zone transversal)",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 4106",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 4106",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

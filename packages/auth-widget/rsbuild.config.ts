@@ -15,7 +15,7 @@ export default defineConfig({
     }),
   ],
   server: {
-    port: 3013,
+    port: 4113,
   },
   html: {
     title: 'NUTRIA · auth-widget',
