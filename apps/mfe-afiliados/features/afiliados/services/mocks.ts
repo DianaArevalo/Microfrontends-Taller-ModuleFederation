@@ -1,4 +1,4 @@
-import type { Afiliado } from '@/types/afiliado';
+import type { Afiliado } from '@/features/afiliados/types/afiliado';
 
 export const afiliadosMock: Afiliado[] = [
   {

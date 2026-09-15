@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { afiliadosMock } from '@/lib/mocks';
-import { Badge, Card } from '@/components/ds';
+import { afiliadosMock } from '@/features/afiliados/services/mocks';
+import { Badge, Card } from '@/lib/ds';
 
 const estadoTone: Record<string, 'success' | 'pending' | 'danger'> = {
   activo: 'success',
@@ -27,7 +27,7 @@ export default function AfiliadosPage(): ReactNode {
       <div className="nt-section">
         <Card title="Listado de afiliados" note={`${afiliadosMock.length} registros simulados`}>
           <div className="nt-cta-row">
-            <Link href="/nuevo" className="nt-cta">
+            <Link href="/afiliados/nuevo" className="nt-cta">
               Registrar afiliado
             </Link>
           </div>
@@ -56,7 +56,7 @@ export default function AfiliadosPage(): ReactNode {
                   <td className="nt-mono">{afiliado.fechaAfiliacion}</td>
                   <td className="nt-mono">{afiliado.semanasCotizadas}</td>
                   <td>
-                    <Link href={`/ficha/${afiliado.id}`}>Ficha</Link>
+                    <Link href={`/afiliados/${afiliado.id}`}>Ficha</Link>
                   </td>
                 </tr>
               ))}

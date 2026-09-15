@@ -10,7 +10,7 @@ Laboratorio frontend de **microfrontends orientados al dominio** sobre **Next.js
                                │
                                ▼
                        ┌───────────────┐
-                       │ shell-nutria  │   HOST · gateway de rutas · puerto 4100
+                       │ shell-nutria  │   HOST · gateway de rutas
                        └───────┬───────┘
                                │  rewrites (/<zona> → <zona>)
                        Multi-Zones
@@ -18,7 +18,6 @@ Laboratorio frontend de **microfrontends orientados al dominio** sobre **Next.js
         ┌───────────┬───────┼───────────┬───────────┬───────────┐
         ▼           ▼       ▼           ▼           ▼           ▼
    afiliados     aportes  historial   pensiones    empresas    admin
-   4101          4102     4103        4104         4105        4106
         │           │       │           │           │
         └───────────┴───────┼───────────┴───────────┘
                             │
@@ -30,7 +29,6 @@ Laboratorio frontend de **microfrontends orientados al dominio** sobre **Next.js
         ┌────────────┼────────────┐
         ▼            ▼            ▼
  design-system    shell-nav   auth-widget
-   (4111)          (4112)       (4113)
 ```
 
 ---
@@ -39,15 +37,15 @@ Laboratorio frontend de **microfrontends orientados al dominio** sobre **Next.js
 
 Cada zona es una **app Next.js completa** (layout, rutas y build propios). Todas usan **App Router**, nunca Pages Router.
 
-| Zona | Paquete | basePath | Puerto dev | Responsabilidad |
-|---|---|---|---|---|
-| Shell HOST | `shell-nutria` | — (raíz) | 4100 | Dashboard, login, gateway de rutas |
-| Afiliados | `mfe-afiliados` | `/afiliados` | 4101 | Registro y fichas de afiliados |
-| Aportes | `mfe-aportes` | `/aportes` | 4102 | Historial de aportes |
-| Historial laboral | `mfe-historial-laboral` | `/historial-laboral` | 4103 | Trayectoria laboral |
-| Pensiones | `mfe-pensiones` | `/pensiones` | 4104 | Evaluaciones y trámites |
-| Empresas | `mfe-empresas` | `/empresas` | 4105 | Registro patronal |
-| Administración | `mfe-admin` | `/admin` | 4106 | Errores, auditoría, parámetros |
+| Zona | Paquete | basePath | Responsabilidad |
+|---|---|---|---|
+| Shell HOST | `shell-nutria` | — (raíz) | Dashboard, login, gateway de rutas |
+| Afiliados | `mfe-afiliados` | `/afiliados` | Registro y fichas de afiliados |
+| Aportes | `mfe-aportes` | `/aportes` | Historial de aportes |
+| Historial laboral | `mfe-historial-laboral` | `/historial-laboral` | Trayectoria laboral |
+| Pensiones | `mfe-pensiones` | `/pensiones` | Evaluaciones y trámites |
+| Empresas | `mfe-empresas` | `/empresas` | Registro patronal |
+| Administración | `mfe-admin` | `/admin` | Errores, auditoría, parámetros |
 
 **Cómo funciona el enrutado:**
 
@@ -66,11 +64,11 @@ Cada zona es una **app Next.js completa** (layout, rutas y build propios). Todas
 
 El plugin de Module Federation de Next.js oficialmente soporta **Pages Router**; para mantener **App Router**, los componentes compartidos se sirven como **remotos** independientes y se consumen en **tiempo de ejecución** desde el cliente.
 
-| Remoto | Paquete | Container (MF) | Puerto dev | Expone |
-|---|---|---|---|---|
-| Design System | `@nutria/design-system` | `design_system` | 4111 | `Button`, `Badge`, `Card`, `Progress` |
-| Nav del shell | `@nutria/shell-nav` | `shell_nav` | 4112 | `SidebarNav`, `Topbar` |
-| Widget de auth | `@nutria/auth-widget` | `auth_widget` | 4113 | `AuthWidget`, `LoginForm` |
+| Remoto | Paquete | Container (MF) | Expone |
+|---|---|---|---|
+| Design System | `@nutria/design-system` | `design_system` | `Button`, `Badge`, `Card`, `Progress` |
+| Nav del shell | `@nutria/shell-nav` | `shell_nav` | `SidebarNav`, `Topbar` |
+| Widget de auth | `@nutria/auth-widget` | `auth_widget` | `AuthWidget`, `LoginForm` |
 
 **Servidor de cada remoto:** los paquetes están construidos con **Rsbuild** (`@module-federation/rsbuild-plugin`) y sirven `remoteEntry.js` en su puerto. Incluyen una página de vista previa propia (`src/index.tsx`) para inspeccionar el remoto en el navegador.
 
@@ -127,14 +125,14 @@ src/
 
 ## 4. Variables de entorno
 
-| Variable | Descripción | Por defecto |
-|---|---|---|
-| `NEXT_PUBLIC_DS_URL` | URL base del remoto design-system | `http://localhost:4111` |
-| `NEXT_PUBLIC_SHELL_NAV_URL` | URL base del remoto shell-nav | `http://localhost:4112` |
-| `NEXT_PUBLIC_AUTH_WIDGET_URL` | URL base del remoto auth-widget | `http://localhost:4113` |
-| `ZONE_AFILIADOS` … `ZONE_ADMIN` | Dominios de las zonas (solo shell) | `http://localhost:300N` |
+| Variable | Descripción |
+|---|---|
+| `NEXT_PUBLIC_DS_URL` | URL base del remoto design-system (requerida) |
+| `NEXT_PUBLIC_SHELL_NAV_URL` | URL base del remoto shell-nav (requerida) |
+| `NEXT_PUBLIC_AUTH_WIDGET_URL` | URL base del remoto auth-widget (requerida) |
+| `ZONE_AFILIADOS` … `ZONE_ADMIN` | Dominios de las zonas (solo shell) |
 
-Cada app incluye un `.env.example`. Los valores por defecto funcionan en desarrollo local sin configuración.
+Cada app incluye un `.env.example` (versionable). En desarrollo local se copia a `.env.local` (ver README); es responsabilidad de cada entorno definir los valores, la app no aplica fallbacks hardcodeados.
 
 ---
 
@@ -156,13 +154,13 @@ pnpm build:apps         # build solo de las 7 apps Next.js
 pnpm build:remotes      # build solo de los 3 remotos Rsbuild
 pnpm typecheck          # tsc --noEmit en todos los workspaces
 
-# Levantar cada pieza en un puerto propio
-pnpm dev:afiliados      # -> http://localhost:4101/afiliados
-pnpm dev:aportes        # -> http://localhost:4102/aportes
-pnpm dev:design-system  # -> http://localhost:4111 (vista previa remoto)
+# Levantar cada pieza en su puerto local (definido por app/paquete)
+pnpm dev:afiliados      # zona afiliados
+pnpm dev:aportes        # zona aportes
+pnpm dev:design-system  # vista previa del remoto
 ```
 
-**Flujo de verificación manual:** con `pnpm dev` abre `http://localhost:4100`. La navegación del shell enruta a cada zona; la barra lateral y los badges provienen de los remotos federados.
+**Flujo de verificación manual:** con `pnpm dev` abre la URL local del shell. La navegación del shell enruta a cada zona; la barra lateral y los badges provienen de los remotos federados.
 
 ---
 

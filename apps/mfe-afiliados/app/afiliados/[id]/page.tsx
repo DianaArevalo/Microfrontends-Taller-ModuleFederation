@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
-import { afiliadosMock } from '@/lib/mocks';
-import { Badge, Button, Card, Progress } from '@/components/ds';
+import { afiliadosMock } from '@/features/afiliados/services/mocks';
+import { Badge, Button, Card, Progress } from '@/lib/ds';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -18,7 +18,7 @@ export default async function AfiliadoFichaPage({ params }: Props): Promise<Reac
     <div>
       <header className="nt-page-head">
         <div className="nt-chip-row">
-          <Link href="/" className="nt-cta nt-cta--quiet">
+          <Link href="/afiliados" className="nt-cta nt-cta--quiet">
             ← Volver al listado
           </Link>
         </div>
@@ -39,7 +39,9 @@ export default async function AfiliadoFichaPage({ params }: Props): Promise<Reac
             </Badge>
           </div>
           <div className="nt-cta-row">
-            <Button variant="primary">Editar afiliado</Button>
+            <Link href={`/afiliados/${afiliado.id}/editar`} className="nt-cta">
+              Editar afiliado
+            </Link>
             <Button variant="outline">Ver historial laboral</Button>
           </div>
         </Card>
