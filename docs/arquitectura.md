@@ -130,7 +130,7 @@ src/
 | `NEXT_PUBLIC_DS_URL` | URL base del remoto design-system (requerida) |
 | `NEXT_PUBLIC_SHELL_NAV_URL` | URL base del remoto shell-nav (requerida) |
 | `NEXT_PUBLIC_AUTH_WIDGET_URL` | URL base del remoto auth-widget (requerida) |
-| `ZONE_AFILIADOS` … `ZONE_ADMIN` | Dominios de las zonas (solo shell) |
+| `ZONE_AFILIADOS_URL` … `ZONE_ADMIN_URL` | Targets de las zonas (solo shell, requeridas) |
 
 Cada app incluye un `.env.example` (versionable). En desarrollo local se copia a `.env.local` (ver README); es responsabilidad de cada entorno definir los valores, la app no aplica fallbacks hardcodeados.
 
