@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { parametrosMock } from '@/features/admin/services/mocks';
-import { Card } from '@/lib/ds';
+import { Card } from '@/components/remote/design-system';
 
 export default function ParametrosPage(): ReactNode {
   return (

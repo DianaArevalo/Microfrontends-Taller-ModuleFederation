@@ -1,7 +1,7 @@
 'use client';
 
 import type { ComponentType, ReactNode } from 'react';
-import { makeRemote } from '@/lib/federation/federation';
+import { makeRemote } from './makeRemote';
 
 export interface BadgeProps {
   tone?: 'success' | 'pending' | 'danger' | 'default';

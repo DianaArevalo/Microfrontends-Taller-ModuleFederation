@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { Badge } from '@/lib/ds';
+import { Badge } from '@/components/remote/design-system';
 
 const MODULES = [
   { href: '/errores', title: 'Errores', desc: 'Bitácora de errores y trazabilidad.' },
