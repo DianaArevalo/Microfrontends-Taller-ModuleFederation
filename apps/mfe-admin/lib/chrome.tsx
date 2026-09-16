@@ -1,7 +1,7 @@
 'use client';
 
 import type { ComponentType } from 'react';
-import { makeRemote } from '@/lib/federation';
+import { makeRemote } from '@/lib/federation/federation';
 
 export interface SidebarNavProps {
   active?: string;
