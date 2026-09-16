@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Card } from '@/components/ds';
+import { Card } from '@/lib/ds';
 
 export default function ErroresPage(): ReactNode {
   return (

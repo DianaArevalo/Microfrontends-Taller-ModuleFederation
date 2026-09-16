@@ -7,9 +7,9 @@
         "name": "next"
       }
     ],
-    "paths": {
+"paths": {
       "@/*": [
-        "./src/*"
+        "./*"
       ]
     },
     "allowJs": true

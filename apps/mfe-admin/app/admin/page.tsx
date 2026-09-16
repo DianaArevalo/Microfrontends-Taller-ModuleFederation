@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { Badge } from '@/components/ds';
+import { Badge } from '@/lib/ds';
 
 const MODULES = [
-  { href: '/errores', title: 'Errores', desc: 'Bitácora de errores y trazabilidad.' },
-  { href: '/auditoria', title: 'Auditoría', desc: 'Eventos de auditoría de las zonas.' },
-  { href: '/parametros', title: 'Parámetros', desc: 'Parámetros generales del sistema.' },
+  { href: '/admin/errores', title: 'Errores', desc: 'Bitácora de errores y trazabilidad.' },
+  { href: '/admin/auditoria', title: 'Auditoría', desc: 'Eventos de auditoría de las zonas.' },
+  { href: '/admin/parametros', title: 'Parámetros', desc: 'Parámetros generales del sistema.' },
 ];
 
 export default function AdminPage(): ReactNode {
