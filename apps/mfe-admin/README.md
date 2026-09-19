@@ -28,24 +28,51 @@ compartidos en **tiempo de ejecución** (CLIENT-ONLY) desde los remotos de Modul
 mfe-admin/
 │
 ├── app/
-│   └── admin/
-│       └── page.tsx
+│   ├── errores/
+│   │   └── page.tsx
+│   ├── auditoria/
+│   │   └── page.tsx
+│   ├── parametros-pension/
+│   │   └── page.tsx
+│   ├── layout.tsx
+│   └── page.tsx
 │
 ├── components/
-│   └── remote/
-│       ├── shell-nav.tsx
-│       ├── design-system.tsx
-│       ├── auth-widget.tsx
-│       └── makeRemote.ts
+│   ├── remote/
+│   │   ├── shell-nav.tsx
+│   │   ├── design-system.tsx
+│   │   ├── auth-widget.tsx
+│   │   └── makeRemote.ts
+│   ├── seguridad/
+│   ├── errores/
+│   ├── auditoria/
+│   └── parametros-pension/
+│
+├── features/
+│   └── admin/
+│       ├── seguridad/
+│       │   ├── accesos/
+│       │   ├── roles/
+│       │   └── permisos/
+│       ├── errores/
+│       ├── auditoria/
+│       └── parametros-pension/
+│           ├── services/
+│           ├── types/
+│           ├── validations/
+│           └── components/
 │
 ├── hooks/
 │   └── useRemote.ts
 │
-└── lib/
-    └── federation/
-        ├── config.ts
-        ├── runtime.ts
-        └── types.ts
+├── lib/
+│   └── federation/
+│       ├── config.ts
+│       ├── runtime.ts
+│       └── types.ts
+│
+├── types/
+└── validations/
 ```
 
 ---

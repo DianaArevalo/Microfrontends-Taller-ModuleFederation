@@ -1,6 +1,6 @@
-import type { Parametro } from '@/features/admin/types/parametro';
+import type { ParametroPension } from '@/features/admin/parametros-pension/types/parametro-pension';
 
-export const parametrosMock: Parametro[] = [
+export const parametrosPensionMock: ParametroPension[] = [
   {
     id: 'par-001',
     codigo: 'Semanas_Minimas',

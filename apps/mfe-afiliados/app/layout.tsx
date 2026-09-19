@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import './globals.css';
-import { SidebarNav, Topbar } from '@/lib/chrome';
+import { SidebarNav, Topbar } from '@/components/remote/shell-nav';
 
 export const metadata: Metadata = {
   title: 'NUTRIA · Afiliados',

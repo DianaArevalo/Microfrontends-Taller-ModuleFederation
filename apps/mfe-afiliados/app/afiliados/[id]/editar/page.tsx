@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
-import { afiliadosMock } from '@/features/afiliados/services/mocks';
-import { Card } from '@/lib/ds';
+import { AfiliadoForm } from '@/components/afiliados/afiliado-form';
+import { Card } from '@/components/remote/design-system';
+import { getAfiliado } from '@/features/afiliados/services/afiliados';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -10,7 +11,7 @@ interface Props {
 
 export default async function EditarAfiliadoPage({ params }: Props): Promise<ReactNode> {
   const { id } = await params;
-  const afiliado = afiliadosMock.find((item) => item.id === id);
+  const afiliado = await getAfiliado(id);
 
   if (!afiliado) notFound();
 
@@ -29,8 +30,16 @@ export default async function EditarAfiliadoPage({ params }: Props): Promise<Rea
       </header>
 
       <div className="nt-section">
-        <Card title="Formulario de edición" note="Pendiente: se conectará con el backend cuando esté disponible">
-          <p className="nt-page-desc">Módulo de edición aún no implementado (esqueleto estructural).</p>
+        <Card title="Formulario de edición" note="Pendiente: se conectará con SP_UPDATE_AFILIADO cuando exista el contrato API">
+          <AfiliadoForm
+            submitLabel="Guardar cambios"
+            initialValues={{
+              tipoDocumento: afiliado.tipoDocumento,
+              documento: afiliado.documento,
+              nombres: afiliado.nombres,
+              apellidos: afiliado.apellidos,
+            }}
+          />
         </Card>
       </div>
     </div>

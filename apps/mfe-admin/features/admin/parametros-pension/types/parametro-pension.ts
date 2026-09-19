@@ -1,4 +1,4 @@
-export interface Parametro {
+export interface ParametroPension {
   id: string;
   codigo: string;
   valor: string;

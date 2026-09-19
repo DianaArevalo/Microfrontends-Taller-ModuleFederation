@@ -5,7 +5,7 @@ import { Badge } from '@/components/remote/design-system';
 const MODULES = [
   { href: '/errores', title: 'Errores', desc: 'Bitácora de errores y trazabilidad.' },
   { href: '/auditoria', title: 'Auditoría', desc: 'Eventos de auditoría de las zonas.' },
-  { href: '/parametros', title: 'Parámetros', desc: 'Parámetros generales del sistema.' },
+  { href: '/parametros-pension', title: 'Parámetros de pensión', desc: 'Parámetros del dominio PARAMETRO_PENSION.' },
 ];
 
 export default function AdminPage(): ReactNode {

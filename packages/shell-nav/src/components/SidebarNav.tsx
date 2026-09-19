@@ -22,7 +22,7 @@ const adminNav: NavItem[] = [
   { id: 'admin', label: 'Panel admin', href: '/admin' },
   { id: 'errores', label: 'Errores', href: '/admin/errores' },
   { id: 'auditoria', label: 'Auditoría', href: '/admin/auditoria' },
-  { id: 'parametros', label: 'Parámetros', href: '/admin/parametros' },
+  { id: 'parametros-pension', label: 'Parámetros pensión', href: '/admin/parametros-pension' },
 ];
 
 function NavList({ items, active }: { items: NavItem[]; active?: string }) {

@@ -1,7 +1,7 @@
 'use client';
 
 import type { ComponentType } from 'react';
-import { makeRemote } from '@/lib/federation';
+import { makeRemote } from './makeRemote';
 
 export interface SidebarNavProps {
   active?: string;
@@ -37,24 +37,4 @@ export const Topbar = makeRemote<TopbarProps>(
   'shell_nav',
   'index',
   (m) => m.Topbar as ComponentType<TopbarProps> | undefined,
-);
-
-export interface AuthWidgetProps {
-  compact?: boolean;
-}
-
-export const AuthWidget = makeRemote<AuthWidgetProps>(
-  'auth_widget',
-  'index',
-  (m) => m.AuthWidget as ComponentType<AuthWidgetProps> | undefined,
-);
-
-export interface LoginFormProps {
-  actionLabel?: string;
-}
-
-export const LoginForm = makeRemote<LoginFormProps>(
-  'auth_widget',
-  'index',
-  (m) => m.LoginForm as ComponentType<LoginFormProps> | undefined,
 );

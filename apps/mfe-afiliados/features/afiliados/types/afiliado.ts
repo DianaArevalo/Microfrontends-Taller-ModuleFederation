@@ -1,4 +1,4 @@
-export type TipoDocumento = 'CC' | 'CE' | 'TI';
+export type TipoDocumento = 'CC' | 'CE' | 'TI' | 'PA';
 
 export type EstadoAfiliado = 'activo' | 'inactivo' | 'pensionado';
 
@@ -19,4 +19,5 @@ export interface AfiliadoNuevo {
   nombres: string;
   apellidos: string;
   email: string;
+  fechaNacimiento: string;
 }
