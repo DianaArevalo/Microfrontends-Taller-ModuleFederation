@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import './globals.css';
-import { SidebarNav, Topbar } from '@/components/chrome';
 
 export const metadata: Metadata = {
   title: 'NUTRIA · Sistema de pensiones',
@@ -12,15 +11,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="es">
-      <body>
-        <div className="nt-shell">
-          <SidebarNav active="inicio" />
-          <div className="nt-main">
-            <Topbar breadcrumb="Inicio" />
-            <main className="nt-content">{children}</main>
-          </div>
-        </div>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
